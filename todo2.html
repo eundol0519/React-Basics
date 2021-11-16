@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+
+    #wrap{
+        width: 700px;
+    }
+
+    #inputElement{
+        float: right;
+    }
+
+    div {
+        width: 300px;
+        height: 100px;
+        margin: 1%;
+        padding: 1%;
+    }
+
+    .todo-list {
+        border: 3px solid gray;
+        display: left;
+    }
+
+    .inputBtn {
+        width: calc(70% - 30px);
+    }
+</style>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    function todoListAdd() {
+        const contents = document.getElementById("contents").value
+
+        temp_html = `<div class="todo-list">
+            <h3>${contents}</h3>
+            <button>완료</button>
+        </div>`
+
+        $("#wrap").append(temp_html)
+    }
+</script>
+<body>
+    <div id="wrap">
+        <h1 id="title">오늘 할 일</h1>
+
+        <div id="inputElement">
+            <p><input id="contents" type="input" value="입력하기 ..."></p>
+            <button onclick="todoListAdd()" class='inputBtn'>추가하기</button>
+        </div>
+
+        <div class="todo-list">
+            <h3>독서하기</h3>
+            <button>완료</button>
+        </div>
+
+        <div class="todo-list">
+            <h3>독서하기</h3>
+            <button>완료</button>
+        </div>
+    </div>
+</body>
+
+</html>
