@@ -11,7 +11,7 @@ const DELETE = 'dictionary/DELETE';
 const UPDATE = 'dictionary/UPDATE';
 
 // 초깃값 설정
-const initialState = {is_loaded : false, list : []}
+const initialState = { is_loaded: false, list: [] }
 
 // Action Creators
 export function loadDictionary(dictionary_list) {
@@ -73,7 +73,7 @@ export const createDictionaryFB = (dictionary) => {
 
 export const deleteDictionaryFB = (dictionary_id) => {
     return async function (dispatch, getState) {
-        
+
         if (!dictionary_id) {
             window.alert("아이디가 없습니다.")
             return
@@ -97,7 +97,7 @@ export const deleteDictionaryFB = (dictionary_id) => {
 
 export const updateDictionaryFB = (dictionary_list) => {
     return async function (dispatch, getState) {
-        
+
         if (!dictionary_list.id) {
             window.alert("아이디가 없습니다.")
             return
@@ -106,7 +106,7 @@ export const updateDictionaryFB = (dictionary_list) => {
         const docRef = doc(db, 'dictionary', dictionary_list.id)
         // 어떤 걸 삭제 할 지 document를 집어온다.
 
-        await updateDoc(docRef, { word: dictionary_list.word, explanation: dictionary_list.explanation, example: dictionary_list.example});
+        await updateDoc(docRef, { word: dictionary_list.word, explanation: dictionary_list.explanation, example: dictionary_list.example });
         // firestore의 값을 수정한다.
 
         // const dictionary_data = (await getDoc(docRef)).data()
@@ -129,11 +129,11 @@ export default function reducer(state = initialState, action = {}) {
     switch (action.type) {
 
         case 'dictionary/LOAD':
-            return {list : action.dictionary_list, is_loaded : true};
+            return { list: action.dictionary_list, is_loaded: true };
 
         case 'dictionary/CREATE':
 
-            const new_dictionary_list = {is_loaded : state.is_loaded , list : [...state.list, action.dictionary_info]}
+            const new_dictionary_list = { is_loaded: state.is_loaded, list: [...state.list, action.dictionary_info] }
 
             return new_dictionary_list;
 
@@ -154,23 +154,23 @@ export default function reducer(state = initialState, action = {}) {
                 }
             }
 
-            return {...state, list : new_dictionary_delete};
+            return { ...state, list: new_dictionary_delete };
 
         case 'dictionary/UPDATE':
 
-            const new_dictionary_update = state.list.map((item, index)=>{
+            const new_dictionary_update = state.list.map((item, index) => {
 
-                if(action.dictionary_index == index){
+                if (action.dictionary_index == index) {
                     item.word = action.dictionary_list.word
                     item.explanation = action.dictionary_list.explanation
                     item.example = action.dictionary_list.example
-                }else{
+                } else {
                     return item;
                 }
                 return item;
             })
 
-            return {...state, list : new_dictionary_update}
+            return { ...state, list: new_dictionary_update }
 
         // do reducer stuff
         default: return state;

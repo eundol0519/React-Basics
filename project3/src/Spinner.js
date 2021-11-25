@@ -1,13 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-// import { Eco } from "@material-ui/icons";
+import { Eco } from "@material-ui/icons";
 
 const Spinner = (props) => {
 
     return (
         <Outter>
-            오나
-            {/* <Eco style={{ color: "white", fontSize: "150px" }} /> */}
+            <Eco style={{ color: "white", fontSize: "150px" }} />
         </Outter>
     );
 }

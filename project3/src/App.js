@@ -10,7 +10,7 @@ import styled, { keyframes } from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux'
 import { deleteDictionaryFB, loadDictionaryFB } from './redux/modules/dictionary'
 
-// import Button from "@material-ui/core/Button";
+import Button from "@material-ui/core/Button";
 
 function App() {
 
@@ -21,7 +21,9 @@ function App() {
   const is_loaded = dictionary_list.is_loaded
 
   const deleteBtn = (index) => {
-    dispatch(deleteDictionaryFB(userInfo[index].id))
+    if (window.confirm("삭제 하시겠습니까?")) {
+      dispatch(deleteDictionaryFB(userInfo[index].id))
+    }
   }
 
   React.useEffect(() => {
@@ -40,15 +42,17 @@ function App() {
                 userInfo.map((item, index) => {
                   return (
                     <Card key={index}>
-                      <SubTitle>단어</SubTitle>
+                      <SubTitle>[Word]</SubTitle>
                       <Text>{item.word}</Text>
-                      <SubTitle>설명</SubTitle>
+                      <SubTitle>[Explanation]</SubTitle>
                       <Text>{item.explanation}</Text>
-                      <SubTitle>예시</SubTitle>
+                      <SubTitle>[Example]</SubTitle>
                       <Text>{item.example}</Text>
-                      <div style={{ display: 'flex' }}>
-                        <DeleteBtn onClick={() => { deleteBtn(index) }}>삭제하기</DeleteBtn>
-                        <UpdateBtn onClick={() => { history.push({pathname:"/updateWord", state:index}) }}>수정하기</UpdateBtn>
+                      <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Button variant="outlined" size="medium" style={{ borderColor: "#FA8072", color: "#FA8072", marginRight: "1%" }}
+                          onClick={() => { deleteBtn(index) }}>삭제하기</Button>
+                        <Button variant="outlined" size="medium" style={{ borderColor: "#4682B4", color: "#4682B4" }}
+                          onClick={() => { history.push({ pathname: "/updateWord", state: { index: index, word: item.word, explanation: item.explanation, example: item.example } }) }}>수정하기</Button>
                       </div>
                     </Card>
                   );
@@ -64,13 +68,13 @@ function App() {
                 </NullCard>
             }
           </Container>
-
-          {
-            !is_loaded && <Spinner></Spinner>
-          }
         </Wrap>
         <AddBtn className="addBtn" onClick={() => { history.push("/addWord") }}><AddBtnText>+</AddBtnText></AddBtn>
       </Route>
+
+      {
+        !is_loaded && <Spinner></Spinner>
+      }
       <Route path="/addWord" component={AddWord}></Route>
       <Route path="/updateWord" component={UpdateWord}></Route>
     </Flex >
@@ -99,28 +103,31 @@ const OutSpin = keyframes`
 
 const Flex = styled.div`
   display: flex;
+  position: relative;
 `
 
 const Wrap = styled.div`
-  width: 500px;
+  width: 530px;
   margin: auto;
   margin-top : 3%;
   margin-bottom : 5%;
-  background-color: #AFEEEE;
-  
+  background-color: #6495ED;
+  height: 590px;
+
   border-radius: 10px;
 `
 
 const Container = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
-  height: 550px;
+  height: 500px;
 `
 
 const Title = styled.h3`
   text-align : left;
   margin-left: 10%;
-  padding-top : 10px;
+  padding-top : 5px;
+  color:white;
 `
 
 const Card = styled.div`
@@ -128,11 +135,12 @@ const Card = styled.div`
   border: 1px solid white;
   border-radius : 5px;
   width: 400px;
-  height: 270px;
+  height: 260px;
   margin:auto;
   padding-left: 5%;
   text-align : left;
-  margin-bottom : 10%;
+  margin-bottom : 5%;
+  padding-top : 1%;
   font-size: 15px;
 `
 
@@ -163,9 +171,8 @@ const NullCard = styled.div`
 `
 
 const SubTitle = styled.p`
-  border-bottom: 1px solid black;
-  width: 7%;
   font-size: 12px;
+  font-weight: bold;
 `
 
 const Text = styled.p`
@@ -173,19 +180,6 @@ const Text = styled.p`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-`
-
-const DeleteBtn = styled.button`
-  border: 1px solid #1E90FF;
-  background-color: #1E90FF;
-  border-radius: 5px;
-  margin-right: 10px;
-`
-
-const UpdateBtn = styled.button`
-  border: 1px solid #1E90FF;
-  background-color: #1E90FF;
-  border-radius: 5px;
 `
 
 const AddBtn = styled.div`
@@ -196,8 +190,8 @@ const AddBtn = styled.div`
   background-color: #1E90FF	;
 
   right: 35%;
-  bottom: 10%;
-  position: fixed;
+  bottom: 13%;
+  position: absolute;
   
   // 커서 올라갔을 때 모양 변하게
   cursor: pointer;

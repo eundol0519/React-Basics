@@ -4,7 +4,7 @@ import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { createDictionaryFB } from './redux/modules/dictionary'
 
-// import Button from "@material-ui/core/Button";
+import Button from '@mui/material/Button';
 
 const AddWord = (props) => {
 
@@ -49,23 +49,23 @@ const AddWord = (props) => {
   return (
     <Flex>
       <Wrap>
-        <Title>단어 추가하기</Title>
+        <Title>Add Words</Title>
         <Card ref={wordState}>
-          <SubTitle>단어</SubTitle>
+          <SubTitle>Word</SubTitle>
           <Input ref={wordRef} type="text"/>
         </Card>
         <Card ref={explanationState}>
-          <SubTitle>설명</SubTitle>
+          <SubTitle>Explanation</SubTitle>
           <Input ref={explanationRef} type="text"/>
         </Card>
         <Card ref={exampleState}>
-          <SubTitle>예시</SubTitle>
+          <SubTitle>Example</SubTitle>
           <Input ref={exampleRef} type="text"/>
         </Card>
 
-        <BtnList>
-          <Btn onClick={addInfo}><BtnText>추가하기</BtnText></Btn>
-          <Btn onClick={() => { history.goBack() }}><BtnText>목록</BtnText></Btn>
+        <BtnList style={{justifyContent: 'center'}}>
+          <Button variant="contained" style={{marginRight:'1%', width:'120px', height:'50px', backgroundColor:"#4169E1"}} onClick={addInfo}><BtnText>추가</BtnText></Button>
+          <Button variant="contained" style={{marginLeft:'1%', width:'120px', height:'50px', backgroundColor:"#4169E1"}} onClick={() => { history.goBack() }}><BtnText>목록</BtnText></Button>
         </BtnList>
       </Wrap>
     </Flex>
@@ -93,11 +93,11 @@ const Flex = styled.div`
 
 const Wrap = styled.div`
   width: 520px;
-  margin: auto;
-  margin-top : 10%;
-  margin-bottom : 5%;
-  background-color: #AFEEEE;
-  height: 615px;
+  margin-top : 9%;
+  margin-bottom : 1%;
+  margin-left : -1%;
+  background-color: #6495ED;
+  height: 590px;
 
   border-radius: 10px;
 `
@@ -105,7 +105,8 @@ const Wrap = styled.div`
 const Title = styled.h3`
   text-align : left;
   margin-left: 10%;
-  padding-top : 10px;
+  padding-top : 5px;
+  color:white;
 `
 
 const Card = styled.div`
@@ -133,25 +134,12 @@ const Input = styled.input`
 `
 
 const SubTitle = styled.p`
-  border-bottom: 1px solid black;
-  width: 7%;
   font-size: 12px;
+  font-weight: bold;
 `
 
 const BtnList = styled.div`
   display: flex;
-`
-
-const Btn = styled.div`
-  border-radius : 5px;
-  width: 190px;
-  height: 40px;
-  background-color: white;
-  margin: auto;
-  margin-bottom: 20px;
-  text-align: center;
-  background-color: #1E90FF;
-  padding-bottom: 10px;
 `
 
 const BtnText = styled.div`

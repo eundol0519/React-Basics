@@ -4,75 +4,76 @@ import { useHistory } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { updateDictionaryFB } from './redux/modules/dictionary'
 
-// import Button from "@material-ui/core/Button";
+import Button from '@mui/material/Button';
 
 const UpdateWord = ({ location }) => {
 
-    let wordRef = useRef('');
-    let explanationRef = useRef('');
-    let exampleRef = useRef('')
+  let wordRef = useRef('');
+  let explanationRef = useRef('');
+  let exampleRef = useRef('')
 
-    const wordState = useRef();
-    const explanationState = useRef();
-    const exampleState = useRef();
+  const wordState = useRef();
+  const explanationState = useRef();
+  const exampleState = useRef();
 
-    const dispatch = useDispatch();
-    const history = useHistory();
+  const dispatch = useDispatch();
+  const history = useHistory();
 
-    const userInfo = useSelector((state) => state.dictionary);
-    const index = location.state
+  const userInfo = useSelector((state) => state.dictionary);
+  const index = location.state.index
 
-    const updateInfo = () => {
+  const updateInfo = () => {
 
-        const wordInfo = wordRef.current.value;
-        const explanationInfo = explanationRef.current.value;
-        const exampleInfo = exampleRef.current.value
+    const wordInfo = wordRef.current.value;
+    const explanationInfo = explanationRef.current.value;
+    const exampleInfo = exampleRef.current.value
 
-        if (wordInfo === "") {
-            wordState.current.style.outline = 'none';
-            wordState.current.style.border = '3px solid #FA8072';
-            explanationState.current.style.border = '1px solid white';
-            exampleState.current.style.border = '1px solid white';
-        } else if (explanationInfo === "") {
-            explanationState.current.style.outline = 'none';
-            wordState.current.style.border = '1px solid white';
-            explanationState.current.style.border = '3px solid #FA8072';
-            exampleState.current.style.border = '1px solid white';
-        } else if (exampleInfo === "") {
-            exampleState.current.style.outline = 'none';
-            wordState.current.style.border = '1px solid white';
-            explanationState.current.style.border = '1px solid white';
-            exampleState.current.style.border = '3px solid #FA8072';
-        } else {
-            dispatch(updateDictionaryFB({ id: userInfo.list[index].id, word: wordInfo, explanation: explanationInfo, example: exampleInfo }))
-            history.push("/");
-        }
+    if (wordInfo === "") {
+      wordState.current.style.outline = 'none';
+      wordState.current.style.border = '3px solid #483D8B';
+      explanationState.current.style.border = '1px solid white';
+      exampleState.current.style.border = '1px solid white';
+    } else if (explanationInfo === "") {
+      explanationState.current.style.outline = 'none';
+      wordState.current.style.border = '1px solid white';
+      explanationState.current.style.border = '3px solid #483D8B';
+      exampleState.current.style.border = '1px solid white';
+    } else if (exampleInfo === "") {
+      exampleState.current.style.outline = 'none';
+      wordState.current.style.border = '1px solid white';
+      explanationState.current.style.border = '1px solid white';
+      exampleState.current.style.border = '3px solid #483D8B';
+    } else {
+      dispatch(updateDictionaryFB({ id: userInfo.list[index].id, word: wordInfo, explanation: explanationInfo, example: exampleInfo }))
+      history.push("/");
     }
+  }
 
-    return (
-        <Flex>
-            <Wrap>
-                <Title>단어 수정하기</Title>
-                <Card ref={wordState}>
-                    <SubTitle>단어</SubTitle>
-                    <Input ref={wordRef} type="text" />
-                </Card>
-                <Card ref={explanationState}>
-                    <SubTitle>설명</SubTitle>
-                    <Input ref={explanationRef} type="text" />
-                </Card>
-                <Card ref={exampleState}>
-                    <SubTitle>예시</SubTitle>
-                    <Input ref={exampleRef} type="text" />
-                </Card>
+  return (
+    <Flex>
+      <Wrap>
+        <Title>Edir Words</Title>
+        <Card ref={wordState}>
+          <SubTitle>Word</SubTitle>
+          <Input ref={wordRef} type="text" defaultValue={location.state.word} />
+        </Card>
+        <Card ref={explanationState}>
+          <SubTitle>Explanation</SubTitle>
+          <Input ref={explanationRef} type="text" defaultValue={location.state.explanation} />
+        </Card>
+        <Card ref={exampleState}>
+          <SubTitle>Example</SubTitle>
+          <Input ref={exampleRef} type="text" defaultValue={location.state.example} />
+          {/* 기본값 설정 할 때 onClick 함수를 사용하는 경우 value가 아니라 defaultValue를 사용 해야 한다고 오류가 떴다. */}
+        </Card>
 
-                <BtnList>
-                    <Btn onClick={updateInfo}><BtnText>수정하기</BtnText></Btn>
-                    <Btn onClick={() => { history.goBack() }}><BtnText>목록</BtnText></Btn>
-                </BtnList>
-            </Wrap>
-        </Flex>
-    );
+        <BtnList style={{ justifyContent: 'center' }}>
+          <Button variant="contained" style={{ marginRight: '1%', width: '120px', height: '50px' }} onClick={updateInfo}><BtnText>수정</BtnText></Button>
+          <Button variant="contained" style={{ marginLeft: '1%', width: '120px', height: '50px' }} onClick={() => { history.goBack() }}><BtnText>목록</BtnText></Button>
+        </BtnList>
+      </Wrap>
+    </Flex>
+  );
 }
 
 const InInput = keyframes`
@@ -96,11 +97,10 @@ const Flex = styled.div`
 
 const Wrap = styled.div`
   width: 520px;
-  margin: auto;
-  margin-top : 10%;
-  margin-bottom : 5%;
-  background-color: #AFEEEE;
-  height: 615px;
+  margin-top : 9%;
+  margin-bottom : 1%;
+  background-color: #6495ED;
+  height: 590px;
 
   border-radius: 10px;
 `
@@ -108,7 +108,8 @@ const Wrap = styled.div`
 const Title = styled.h3`
   text-align : left;
   margin-left: 10%;
-  padding-top : 10px;
+  padding-top : 5px;
+  color:white;
 `
 
 const Card = styled.div`
@@ -136,25 +137,12 @@ const Input = styled.input`
 `
 
 const SubTitle = styled.p`
-  border-bottom: 1px solid black;
-  width: 7%;
+  font-weight: bold;
   font-size: 12px;
 `
 
 const BtnList = styled.div`
   display: flex;
-`
-
-const Btn = styled.div`
-  border-radius : 5px;
-  width: 190px;
-  height: 40px;
-  background-color: white;
-  margin: auto;
-  margin-bottom: 20px;
-  text-align: center;
-  background-color: #1E90FF;
-  padding-bottom: 10px;
 `
 
 const BtnText = styled.div`
