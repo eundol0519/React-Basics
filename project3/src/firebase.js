@@ -6,6 +6,8 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+
+// 할당량 최대치 갈 때마다 프로젝트 삭제 하고 새로 만들어서 바꿔줘야 함
 const firebaseConfig = {
   apiKey: "AIzaSyAuLSgmuEkhE0bI8HVcYC_HJab2MFgwbvs",
   authDomain: "dictionary-5e1c5.firebaseapp.com",
